@@ -47,7 +47,9 @@ const App = () => {
 
   return (
     
-    <div className='main w-screen  bg-gray-800 text-white flex items-center flex-col gap-2 font-poppins'>
+    <div className='main w-screen  bg-gray-800 text-white flex items-center flex-col gap-2 font-poppins' 
+    
+    >
      <Toaster 
      
      gutter={3} // Adjusts the spacing between toasts
@@ -56,6 +58,7 @@ const App = () => {
           style: {
             background: "#363636",
             color: "#fff",
+            fontFamily:'cursive'
           },
         }}
      
@@ -88,7 +91,8 @@ const App = () => {
           tasks.map((task, index) => (
             <h1
               key={index}
-              className='task-item bg-white text-black p-2 m-2  rounded-lg cursor-pointer'
+              className='task-item bg-white text-black p-2 m-2  rounded-lg cursor-pointer font-bold  hover:bg-green-500'
+              style={{fontFamily:'cursive'}}
               onClick={() => deleteTask(index)} // Delete task on click
               title='Click TO Delete Task'
             >
