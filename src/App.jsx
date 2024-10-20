@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import toast, {Toaster} from 'react-hot-toast'
+
 
 const App = () => {
   // State to manage input data and list of tasks
   const [data, setData] = useState('');
   const [tasks, setTasks] = useState([]);
-
+  
      
   // Effect to load tasks from localStorage when the app loads
   useEffect(() => {
@@ -26,34 +28,54 @@ const App = () => {
       setTasks(newTasks);  // Add the new task to the list
       saveToLocalStorage(newTasks);  // Save updated list to local storage
       setData('');  // Clear the input field after adding the task
+      toast.success("Task Added Successfully 😍")
     }
   };
 
   // Handler to delete a task from the list
   const deleteTask = (index) => {
+    
     const newTasks = tasks.filter((task, i) => i !== index); // Remove task by index
     setTasks(newTasks);
     saveToLocalStorage(newTasks);  // Save updated list to local storage
+
+    toast.error("Task Deleted!")
+    
+    
+
   };
 
   return (
     
     <div className='main w-screen  bg-gray-800 text-white flex items-center flex-col gap-2 font-poppins'>
+     <Toaster 
+     
+     gutter={3} // Adjusts the spacing between toasts
+        
+        toastOptions={{
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+        }}
+     
+     />
       <div className='heading w-full flex justify-center p-2 m-2 '>
         <h1 className='text-black bg-pink-100 p-2 rounded-xl border-white text-3xl font-mono font-extrabold shadow-xl shadow-cyan-500'>TODO LIST</h1>
       </div>
 
-      <div className='adder w-full h-1/5  flex justify-center p-2 m-2 gap-2 items-center'>
+      <div className='adder w-full h-1/5  flex justify-center p-2 m-2 gap-2 items-center flex-col sm:flex-row self-center'>
         <div className='inputbox ml-3 text-black'>
           <input
             type="text"
-            className='inputdata w-80 h-10 rounded-lg pl-2'
+            className='inputdata w-80 h-10 rounded-lg sm:pl-2 p-2'
             value={data} // Bind input value to state
+            placeholder='enter text here...'
             onChange={(e) => setData(e.target.value)} // Update state on input change
           />
         </div>
         <div className='addbutton '>
-          <button className='h-10 w-20 rounded-lg bg-blue-500 hover:bg-blue-700 font-semibold mr-1 ' onClick={addTask}>
+          <button className='sm:h-10 sm:w-20 sm:rounded-lg bg-blue-500 hover:bg-blue-700 font-semibold sm:mr-1 w-80 h-10 ml-2 rounded-lg  ' onClick={addTask}>
             Add Task
           </button>
         </div>
@@ -68,6 +90,7 @@ const App = () => {
               key={index}
               className='task-item bg-white text-black p-2 m-2  rounded-lg cursor-pointer'
               onClick={() => deleteTask(index)} // Delete task on click
+              title='Click TO Delete Task'
             >
               {task}
             </h1>
